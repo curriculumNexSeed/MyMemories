@@ -153,8 +153,13 @@ a:after {
   height: 300px;
   width:300px;
 }
+/*.picture {
+  height: 300px;
+  width:300px;
+}*/
+
 .picture {
-margin-top: 80px;
+  margin-top: 80px;
 }
 
 /* hello */

@@ -1,3 +1,27 @@
+<?php
+  require('dbconnect.php');
+
+  $sql = 'SELECT * FROM `feeds` ORDER BY `id` DESC';
+  $stmt = $dbh->prepare($sql);
+  $stmt->execute();
+
+  $pictures = array();
+  while (1) {
+    $rec = $stmt->fetch(PDO::FETCH_ASSOC);
+
+    if ($rec == false) {
+      break;
+    }
+    $pictures[] = $rec;
+  }
+
+  // echo "<pre>";
+  // var_dump($pictures);die();
+  // echo "<pre>";
+  $dbh = null;
+
+?>
+
 <!DOCTYPE html>
 <html lang="en">
   <head>
@@ -42,25 +66,34 @@
         </div>
         <div class="navbar-collapse collapse">
           <ul class="nav navbar-nav navbar-right">
-            <li class="active"><a href="index.html">Main page</a></li>
+            <li class="active"><a href="post.php">Post photos</a></li>
           </ul>
         </div><!--/.nav-collapse -->
       </div>
     </div>
 
+
+    <div id="hello">
+        <div class="container">
+          <div class="row">
+            <div class="col-lg-8 col-lg-offset-2 centered">
+              <h1>My Memories</h1>
+              <h2>~ In Cebu ~</h2>
+            </div><!-- /col-lg-8 -->
+          </div><!-- /row -->
+        </div> <!-- /container -->
+    </div><!-- /hello -->
+    
+    
     <div class="container">
       <div class="main-contents">
-        <div class="col-lg-10 col-lg-offset-1 centered">
-          <div class="col-xs-4">
-            <a href="detail.html" class="trim"><img class="picture" src="assets/img/background_img2.jpg" alt=""></a>
-          </div>
-          <div class="col-xs-8">
-            <div class="details">
-              <h3 class="post-title">タイトル（２４文字まで）</h3>
-              <h4 class="post-date">2018/12/09</h4>
-              <h3 class="post-detail">ここに内容を書きます。ここに内容を書きます。ここに内容を書きます。ここに内容を書きます。ここに内容を書きます。ここに内容を書きます。ここに内容を書きます。ここに内容を書きます。ここに内容を書きます。ここに内容を書きます。ここに内容を書きます。ここに内容を書きます。ここに内容を書きます。ここに内容を書きます。ここに内容を書きます。（１４０文字まで）</h3>
-            </div>
-          </div>
+        <div class="row centered mt grid">
+          <h3>Album</h3>
+            <?php foreach ($pictures as $picture){ ?>
+              <div class="col-lg-4">
+                <a href="detail.php?id=<?php echo $picture['id'] ?>" class="trim"><img class="picture" src="post_img/<?php echo $picture['img_name'] ?>" alt=""></a>
+              </div>
+            <?php } ?>
         </div>
       </div>
     </div>
@@ -71,6 +104,7 @@
           <p>I <i class="fa fa-heart"></i> Cubu.</p>
         </div>
       </div>
+
     </div>
 
     <!-- Bootstrap core JavaScript

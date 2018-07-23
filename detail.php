@@ -1,3 +1,19 @@
+<?php
+  require('dbconnect.php');
+
+  $id = $_GET['id'];
+
+  $sql = 'SELECT * FROM `feeds` WHERE `id`= ? ';
+  $data = array($id);
+  $stmt = $dbh->prepare($sql);
+  $stmt->execute($data);
+  $picture = $stmt->fetch(PDO::FETCH_ASSOC);
+
+
+  $dbh = null;
+
+?>
+
 <!DOCTYPE html>
 <html lang="en">
   <head>
@@ -42,7 +58,7 @@
         </div>
         <div class="navbar-collapse collapse">
           <ul class="nav navbar-nav navbar-right">
-            <li class="active"><a href="index.html">Main page</a></li>
+            <li class="active"><a href="index.php">Main page</a></li>
           </ul>
         </div><!--/.nav-collapse -->
       </div>
@@ -52,13 +68,13 @@
       <div class="main-contents">
         <div class="col-lg-10 col-lg-offset-1 centered">
           <div class="col-xs-4">
-            <a href="detail.html" class="trim"><img class="picture" src="assets/img/background_img2.jpg" alt=""></a>
+            <a href="#" class="trim"><img class="picture" src="post_img/<?php echo $picture['img_name'] ?>" alt=""></a>
           </div>
           <div class="col-xs-8">
             <div class="details">
-              <h3 class="post-title">タイトル（２４文字まで）</h3>
-              <h4 class="post-date">2018/12/09</h4>
-              <h3 class="post-detail">ここに内容を書きます。ここに内容を書きます。ここに内容を書きます。ここに内容を書きます。ここに内容を書きます。ここに内容を書きます。ここに内容を書きます。ここに内容を書きます。ここに内容を書きます。ここに内容を書きます。ここに内容を書きます。ここに内容を書きます。ここに内容を書きます。ここに内容を書きます。ここに内容を書きます。（１４０文字まで）</h3>
+              <h3 class="post-title"><?php echo $picture['title'] ?></h3>
+              <h4 class="post-date"><?php echo $picture['date'] ?></h4><br>
+              <h3 class="post-detail"><?php echo $picture['detail'] ?></h3>
             </div>
           </div>
         </div>
